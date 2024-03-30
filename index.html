@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Live object translator</title>
+    <meta charset="utf-8">
+    <!-- Import the webpage's stylesheet -->
+    <link rel="stylesheet" href="style.css">
+  </head>  
+  <body>
+    <h1>Live object translator</h1>
+    
+    <section id="demos" class="invisible">
+
+      <p id="p2">Hold objects up to the camera and select the language you want them translated into</p>
+
+<div class="centering">
+
+    <select id="language" onchange="selector()">
+      <option value="Spanish">🇪🇸Spanish</option>
+      <option value="Mandarin">🇨🇳Mandarin</option>
+      <option value="Hindi">🇮🇳Hindi</option>
+      <option value="German">🇩🇪German</option>
+      <option value="Arabic">🇸🇦Arabic</option>
+      <option value="Hebrew">🇮🇱Hebrew</option>
+      <option value="French">🇫🇷French</option>
+      <option value="Russian">🇷🇺Russian</option>
+    </select>
+      <button id="hear" type = 'button' onclick = 'playSound("woof")'>hear translation</button>
+
+    <p id="p1">The Object</p>
+      
+      <div id="liveView" class="camView">
+        <button id="webcamButton">Enable Webcam</button>
+        <video id="webcam" autoplay muted width="640" height="480"></video>
+      </div>
+    </section>
+
+</div>
+
+    <!-- Import TensorFlow.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js" type="text/javascript"></script>
+    <!-- Load the coco-ssd model to use to recognize things in images -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+    
+    <!-- Import the page's JavaScript to do some stuff -->
+    <script src="script.js" defer></script>
+
+    <audio id="1es" src="audio/1es.mp3" preload="auto"></audio>
+    <audio id="1cn" src="audio/1cn.mp3" preload="auto"></audio>
+    <audio id="1hi" src="audio/1hi.mp3" preload="auto"></audio>
+    <audio id="1de" src="audio/1de.mp3" preload="auto"></audio>
+    <audio id="1ar" src="audio/1ar.mp3" preload="auto"></audio>
+    <audio id="1iw" src="audio/1iw.mp3" preload="auto"></audio>
+    <audio id="1fr" src="audio/1fr.mp3" preload="auto"></audio>
+    <audio id="1ru" src="audio/1ru.mp3" preload="auto"></audio>
+    
+    <audio id="2es" src="audio/2es.mp3" preload="auto"></audio>
+    <audio id="2cn" src="audio/2cn.mp3" preload="auto"></audio>
+    <audio id="2hi" src="audio/2hi.mp3" preload="auto"></audio>
+    <audio id="2de" src="audio/2de.mp3" preload="auto"></audio>
+    <audio id="2ar" src="audio/2ar.mp3" preload="auto"></audio>
+    <audio id="2iw" src="audio/2iw.mp3" preload="auto"></audio>
+    <audio id="2fr" src="audio/2fr.mp3" preload="auto"></audio>
+    <audio id="2ru" src="audio/2ru.mp3" preload="auto"></audio>
+    
+    <audio id="3es" src="audio/3es.mp3" preload="auto"></audio>
+    <audio id="3cn" src="audio/3cn.mp3" preload="auto"></audio>
+    <audio id="3hi" src="audio/3hi.mp3" preload="auto"></audio>
+    <audio id="3de" src="audio/3de.mp3" preload="auto"></audio>
+    <audio id="3ar" src="audio/3ar.mp3" preload="auto"></audio>
+    <audio id="3iw" src="audio/3iw.mp3" preload="auto"></audio>
+    <audio id="3fr" src="audio/3fr.mp3" preload="auto"></audio>
+    <audio id="3ru" src="audio/3ru.mp3" preload="auto"></audio>
+    
+    <audio id="4es" src="audio/4es.mp3" preload="auto"></audio>
+    <audio id="4cn" src="audio/4cn.mp3" preload="auto"></audio>
+    <audio id="4hi" src="audio/4hi.mp3" preload="auto"></audio>
+    <audio id="4de" src="audio/4de.mp3" preload="auto"></audio>
+    <audio id="4ar" src="audio/4ar.mp3" preload="auto"></audio>
+    <audio id="4iw" src="audio/4iw.mp3" preload="auto"></audio>
+    <audio id="4fr" src="audio/4fr.mp3" preload="auto"></audio>
+    <audio id="4ru" src="audio/4ru.mp3" preload="auto"></audio>
+
+    <audio id="5es" src="audio/5es.mp3" preload="auto"></audio>
+    <audio id="5cn" src="audio/5cn.mp3" preload="auto"></audio>
+    <audio id="5hi" src="audio/5hi.mp3" preload="auto"></audio>
+    <audio id="5de" src="audio/5de.mp3" preload="auto"></audio>
+    <audio id="5ar" src="audio/5ar.mp3" preload="auto"></audio>
+    <audio id="5iw" src="audio/5iw.mp3" preload="auto"></audio>
+    <audio id="5fr" src="audio/5fr.mp3" preload="auto"></audio>
+    <audio id="5ru" src="audio/5ru.mp3" preload="auto"></audio>
+
+    <audio id="6es" src="audio/6es.mp3" preload="auto"></audio>
+    <audio id="6cn" src="audio/6cn.mp3" preload="auto"></audio>
+    <audio id="6hi" src="audio/6hi.mp3" preload="auto"></audio>
+    <audio id="6de" src="audio/6de.mp3" preload="auto"></audio>
+    <audio id="6ar" src="audio/6ar.mp3" preload="auto"></audio>
+    <audio id="6iw" src="audio/6iw.mp3" preload="auto"></audio>
+    <audio id="6fr" src="audio/6fr.mp3" preload="auto"></audio>
+    <audio id="6ru" src="audio/6ru.mp3" preload="auto"></audio>
+
+    <audio id="7es" src="audio/7es.mp3" preload="auto"></audio>
+    <audio id="7cn" src="audio/7cn.mp3" preload="auto"></audio>
+    <audio id="7hi" src="audio/7hi.mp3" preload="auto"></audio>
+    <audio id="7de" src="audio/7de.mp3" preload="auto"></audio>
+    <audio id="7ar" src="audio/7ar.mp3" preload="auto"></audio>
+    <audio id="7iw" src="audio/7iw.mp3" preload="auto"></audio>
+    <audio id="7fr" src="audio/7fr.mp3" preload="auto"></audio>
+    <audio id="7ru" src="audio/7ru.mp3" preload="auto"></audio>
+    
+  </body>
+</html>
